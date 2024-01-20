@@ -1,12 +1,18 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import OauthButton from '../components/Oauth-button';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  signInFailure,
+  signInStart,
+  signInSuccess,
+} from '../redux/user/userSlice';
 
 export default function SignUp() {
   const [formData, setFormData] = useState({});
-  const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const navigate = useNavigate()
+  const { error, loading } = useSelector((state) => state.user);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleChange = (e) => {
     setFormData({
@@ -19,7 +25,7 @@ export default function SignUp() {
     e.preventDefault();
 
     try {
-      setLoading(true);
+      dispatch(signInStart);
       const res = await fetch('/api/auth/signup', {
         method: 'POST',
         headers: {
@@ -32,20 +38,16 @@ export default function SignUp() {
 
       // if error from api
       if (data.success === false) {
-        setError(data.message);
-        setLoading(false);
+        dispatch(signInFailure(data.message));
         return;
       }
 
-      setLoading(false);
-      setError(null);
-      navigate('/sign-in')
+      dispatch(signInSuccess(data));
+      navigate('/sign-in');
     } catch (error) {
-      setLoading(false);
-      setError(error.message);
+      dispatch(signInFailure(error.message));
     }
   };
-
 
   return (
     <div className="max-w-lg mx-auto p-3">
