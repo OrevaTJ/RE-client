@@ -44,36 +44,35 @@ export const signin = async (req, res, next) => {
 
 export const google = async (req, res, next) => {
   try {
-    const user = await User.findOne({ email: req.body.email });
-    if (user) {
-      const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
+    const { email, name, photo } = req.body;
 
-      const { password: removePassword, ...otherUserDetails } = user._doc;
+    // Check if the user with the provided email already exists in the database
+    let user = await User.findOne({ email });
 
-      res
-        .cookie('user_token', token, { httpOnly: true })
-        .status(200)
-        .json(otherUserDetails);
-    } else {
-      const generatedPassword = generatePassword(16)
+    if (!user) {
+      const generatedPassword = generatePassword(16);
       const hashPassword = bcryptjs.hashSync(generatedPassword, 10);
-      const newUser = new User({ 
-        username: req.body.name.split(" ").join("").toLowerCase() + generatePassword(4), 
-        email: req.body.email, 
+
+      const username =
+        name.split(' ').join('').toLowerCase() + generatePassword(4);
+
+      // Create and save the new user to the database
+      user = new User({
+        username,
+        email,
         password: hashPassword,
-        profilePhoto: req.body.photo,
+        profilePhoto: photo,
       });
-
-      await newUser.save();
-
-      const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET);
-
-      const { password: removePassword, ...otherUserDetails } = newUser._doc;
-      res
-        .cookie('user_token', token, { httpOnly: true })
-        .status(200)
-        .json(otherUserDetails);
+      await user.save();
     }
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
+
+    const { password: removePassword, ...otherUserDetails } = user._doc;
+
+    res
+      .cookie('user_token', token, { httpOnly: true })
+      .status(200)
+      .json(otherUserDetails);
   } catch (error) {
     next(error);
   }
