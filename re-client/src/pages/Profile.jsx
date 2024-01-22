@@ -15,6 +15,7 @@ export default function Profile() {
   const [uploadPercent, setUploadPercent] = useState(0);
   const [uploadError, setUploadError] = useState(null);
   const [formData, setFormData] = useState({});
+  const [isUploading, setIsUploading] = useState(false);
 
   console.log(formData);
 
@@ -24,28 +25,37 @@ export default function Profile() {
     }
   }, [imageFile]);
 
-  const handleImageFileUpload = (file) => {
+  const handleImageFileUpload = async (file) => {
+    if (isUploading) return;
+
+    setIsUploading(true);
+
     const storage = getStorage(app);
     const fileName = new Date().getTime() + file.name;
     const storageRef = ref(storage, fileName);
     const uploadTask = uploadBytesResumable(storageRef, file);
 
-    uploadTask.on(
-      'state_changed',
-      (snapshot) => {
+    try {
+      uploadTask.on('state_changed', (snapshot) => {
         const progress =
           (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
         setUploadPercent(Math.round(progress));
-      },
-      (error) => {
-        setUploadError(error);
-      },
-      () => {
-        getDownloadURL(uploadTask.snapshot.ref).then((downloadUrl) =>
-          setFormData({ ...formData, profilePhoto: downloadUrl })
-        );
-      }
-    );
+      });
+
+      await uploadTask;
+
+      const downloadUrl = await getDownloadURL(uploadTask.snapshot.ref);
+      setFormData({ ...formData, profilePhoto: downloadUrl });
+
+      // Clear upload progress after successful upload
+      setUploadPercent(0);
+    } catch (error) {
+      console.error('Error uploading image:', error);
+
+      setUploadError('Image upload failed. Please try again.');
+    } finally {
+      setIsUploading(false);
+    }
   };
 
   return (
@@ -65,15 +75,17 @@ export default function Profile() {
           alt="Profile Photo"
           className="object-cover rounded-full h-24 w-24 m-2 cursor-pointer self-center"
         />
-        <p className='text-sm self-center'>
-          {uploadError ? (
-            <span className='text-red-600'>Image upload error</span>
-          ) : uploadPercent > 0 && uploadPercent < 100 ? (
-            <span className='text-slate-600'>Uploading {`${uploadPercent}%`}</span>
-          ) : uploadPercent === 100 ? (
-            <span className='text-green-600'>Image upload successful</span>
-          ) : (
-            ''
+        <p className="text-sm self-center">
+          {uploadError && (
+            <span className="text-red-600">Image upload error</span>
+          )}
+          {uploadPercent > 0 && uploadPercent < 100 && (
+            <span className="text-slate-600">
+              Uploading {`${uploadPercent}%`}
+            </span>
+          )}
+          {uploadPercent === 100 && (
+            <span className="text-green-600">Image upload successful</span>
           )}
         </p>
         <input
