@@ -1,7 +1,10 @@
 import { FaSearch } from 'react-icons/fa';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 export default function Header() {
+  const { currentUser } = useSelector((state) => state.user)
+
   return (
     <header className="bg-slate-200 shadow-md">
       <div className="flex justify-between p-2 sm:p-4 items-center max-w-6xl mx-auto">
@@ -25,8 +28,13 @@ export default function Header() {
               About
             </li>
           </Link>
-          <Link to="/sign-in">
-            <li className="text-slate-600 hover:underline">Sign In</li>
+          <Link to="/profile">
+            {currentUser ? (
+              <img src={currentUser.profilePhoto} alt='Profile Photo' 
+                className='object-cover rounded-full w-7 h-7'/>
+            ) : (
+              <li className="text-slate-600 hover:underline">Sign In</li>
+            )}
           </Link>
         </ul>
       </div>

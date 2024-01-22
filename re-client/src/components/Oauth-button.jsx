@@ -8,7 +8,9 @@ export default function OauthButton() {
     const navigate = useNavigate();
   const dispatch = useDispatch()
 
-  const handleGoogle = async () => {
+  const handleGoogle = async (e) => {
+    e.preventDefault();
+    
     try {
       const provider = new GoogleAuthProvider();
       const auth = getAuth(app);
@@ -29,8 +31,7 @@ export default function OauthButton() {
 
       const data = await res.json();
 
-      dispatch(signInSuccess(data));
-      navigate('/');
+      dispatch(signInSuccess(data)) && navigate('/');
     } catch (error) {
       console.log(error.message);
     }
