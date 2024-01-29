@@ -20,6 +20,7 @@ import {
 } from '../redux/user/userSlice';
 
 import { Link } from 'react-router-dom';
+import ProfileListings from '../components/Profile-listings';
 
 export default function Profile() {
   const { currentUser, loading, error } = useSelector((state) => state.user);
@@ -223,6 +224,7 @@ export default function Profile() {
       <p className="text-green-700 mt-3">
         {updateSuccess && 'Update successful'}
       </p>
+      <ProfileListings />
     </div>
   );
 }
