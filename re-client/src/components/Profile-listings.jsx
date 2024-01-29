@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 export default function ProfileListings() {
   const [listingsError, setListingsError] = useState(null);
   const { currentUser } = useSelector((state) => state.user);
-  const [userListings, setUserListings] = useState(null);
+  const [userListings, setUserListings] = useState([]);
 
   const fetchUserListings = async () => {
     setListingsError(null);
@@ -25,7 +25,26 @@ export default function ProfileListings() {
     }
   };
 
-  console.log(userListings);
+  const handleDelete = async (id) => {
+    setListingsError(null);
+
+    try {
+      const res = await fetch(`/api/listing/delete/${id}`, {
+        method: 'DELETE',
+      });
+      const data = await res.json();
+
+      if (data.success === false) {
+        return setListingsError(data.message);
+      }
+
+      setUserListings((prevData) =>
+        prevData.filter((listing) => listing._id !== id)
+      );
+    } catch (error) {
+      setListingsError(error.message);
+    }
+  };
 
   return (
     <div>
@@ -35,7 +54,7 @@ export default function ProfileListings() {
       <p className="text-red-700 mt-5">
         {listingsError && 'Error loading listings.'}
       </p>
-      {userListings && (
+      {userListings && userListings.length > 0 && (
         <div className="flex flex-col gap-4">
           <h1 className="fon text-center text-2xl mt-5 font-semibold">
             Your Listings
@@ -59,7 +78,12 @@ export default function ProfileListings() {
                 </p>
               </Link>
               <div className="flex flex-col items-center p-3">
-                <button className="text-red-700 ">Remove</button>
+                <button
+                  onClick={() => handleDelete(listing._id)}
+                  className="text-red-700 "
+                >
+                  Remove
+                </button>
                 <button className="text-green-700 ">Edit</button>
               </div>
             </div>

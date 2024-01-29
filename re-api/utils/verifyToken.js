@@ -9,6 +9,7 @@ export const verifyToken = (req, res, next) => {
 
     const user = jwt.verify(token, process.env.JWT_SECRET);
 
+    // add user id as user to req, use in verifying user all through
     req.user = user;
     next();
   } catch (error) {
