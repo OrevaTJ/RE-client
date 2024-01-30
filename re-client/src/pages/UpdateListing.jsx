@@ -7,9 +7,9 @@ import {
 import { useEffect, useState } from 'react';
 import { app } from '../firebase';
 import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
-export default function CreateListing() {
+export default function UpdateListing() {
   const { currentUser } = useSelector((state) => state.user);
   const [images, setImages] = useState([]);
   const [formData, setFormData] = useState({
@@ -30,6 +30,7 @@ export default function CreateListing() {
   const [imageUploading, setImageUploading] = useState(false);
   const [formUploadError, setFormUploadError] = useState(null);
   const [formUploading, setFormUploading] = useState(false);
+  const params = useParams();
 
   const navigate = useNavigate();
 
@@ -41,6 +42,21 @@ export default function CreateListing() {
       }));
     }
   }, [formData.offer]);
+
+  useEffect(() => {
+    const getListing = async () => {
+      const res = await fetch(`/api/listing/get/${params.id}`);
+      const data = await res.json();
+      if (data.success === false) {
+        console.log(data.message);
+        return;
+      }
+
+      setFormData(data);
+    };
+
+    getListing();
+  }, [params.id]);
 
   const handleImageUpload = async () => {
     try {
@@ -140,7 +156,7 @@ export default function CreateListing() {
     try {
       setFormUploading(true);
 
-      const res = await fetch('/api/listing/create', {
+      const res = await fetch(`/api/listing/update/${params.id}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -168,7 +184,7 @@ export default function CreateListing() {
   return (
     <main className="p-3 max-w-4xl mx-auto">
       <h1 className="text-center font-semibold text-3xl my-5">
-        Create Listing
+        Update Listing
       </h1>
       <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-4">
         <div className="flex flex-col flex-1 gap-3">
@@ -373,7 +389,7 @@ export default function CreateListing() {
             {formUploading ? (
               <span className="loading loading-spinner loading-md"></span>
             ) : (
-              'Create Listing'
+              'Update Listing'
             )}
           </button>
           {formUploadError && (

@@ -84,7 +84,7 @@ export default function ProfileListings() {
                 >
                   Remove
                 </button>
-                <button className="text-green-700 ">Edit</button>
+                <Link to={`/update-listing/${listing._id}`} className="text-green-700 ">Edit</Link>
               </div>
             </div>
           ))}
