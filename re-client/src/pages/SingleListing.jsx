@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper/modules';
@@ -13,12 +14,15 @@ import {
   FaParking,
   FaShare,
 } from 'react-icons/fa';
+import ContactOwner from '../components/Contact-owner';
 
 export default function SingleListing() {
+  const { currentUser } = useSelector((state) => state.user);
   const [singleListing, setSingleListing] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [copied, setCopied] = useState(false);
+  const [contact, setContact] = useState(false);
   const params = useParams();
 
   useEffect(() => {
@@ -144,6 +148,18 @@ export default function SingleListing() {
                 {singleListing.furnished ? 'Furnished' : 'Unfurnished'}
               </li>
             </ul>
+            {currentUser &&
+              singleListing.userId !== currentUser._id &&
+              !contact && (
+                <button
+                  onClick={() => setContact(true)}
+                  className="text-white bg-slate-700 p-3 rounded-md uppercase 
+                hover:opacity-80"
+                >
+                  Contact Owner
+                </button>
+              )}
+              {contact && <ContactOwner singleListing={singleListing} />}
           </div>
         </div>
       )}
