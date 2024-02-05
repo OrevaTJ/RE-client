@@ -118,7 +118,7 @@ export default function SingleListing() {
                 <p className="bg-green-900 w-full max-w-[200px] text-white text-center p-1 rounded-md">
                   $
                   {+singleListing.priceRegular - +singleListing.priceDiscounted}{' '}
-                  OFF
+                  Off
                 </p>
               )}
             </div>
