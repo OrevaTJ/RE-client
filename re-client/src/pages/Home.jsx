@@ -1,154 +1,114 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation } from 'swiper/modules';
-import 'swiper/css/bundle';
 import ListingItem from '../components/Listing-item';
+import hero from '../../assets/hero.jpg';
+import ListingByLocation from '../components/home-components/Listing-location';
 
 export default function Home() {
-  const [offers, setOffers] = useState([])
-  const [sales, setSales] = useState([])
-  const [rents, setRents] = useState([])
+  const [listings, setListings] = useState([]);
 
   useEffect(() => {
-    const getOffers = async () => {
+    const fetchData = async () => {
       try {
-        const res = await fetch('/api/listing/get?offer=true&limit=4')
-        const data = await res.json()
-        setOffers(data)
-        getSales()
-      } catch (error) {
-        console.log(error)
-      }
-    }
+        const res = await fetch(`/api/listing/?type=all`);
+        const data = await res.json();
 
-    const getSales = async () => {
-      try {
-        const res = await fetch('/api/listing/get?type=sale&limit=4')
-        const data = await res.json()
-        setSales(data)
-        getRents()
+        setListings(data);
       } catch (error) {
-        console.log(error)
+        console.error('Error fetching data:', error);
       }
-    }
+    };
 
-    const getRents = async () => {
-      try {
-        const res = await fetch('/api/listing/get?type=rent&limit=4')
-        const data = await res.json()
-        setRents(data)
-      } catch (error) {
-        console.log(error)
-      }
-    }
-
-    getOffers()
-  }, [])
+    fetchData();
+  }, []);
 
   return (
     <div>
       {/* top */}
-      <div className="flex flex-col gap-5 py-28 px-8 max-w-6xl mx-auto">
-        <h1 className="text-slate-700 font-bold text-3xl lg:text-6xl">
-          Find your next <span className="text-slate-500">perfect</span>
-          <br />
-          place with ease
-        </h1>
-        <div className="text-gray-400 text-xs sm:text-sm">
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab facilis 
-          unde alias?
-          <br />
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Voluptate, quas.
+      <div
+        style={{
+          background: `url(${hero}) center no-repeat`,
+          backgroundSize: 'cover',
+        }}
+        className="h-[500px] flex justify-center align-middle"
+      >
+        <div className="flex flex-col max-w-7xl m-auto gap-5 items-center rounded-md bg-black bg-opacity-50">
+          <div className="flex flex-col mt-7 items-center text-red-100">
+            <h1 className="capitalize text-3xl font-semibold">
+              Find your dream home{' '}
+            </h1>
+            <p className="text-sm">
+              For as low as $10 per day with limited time offer discounts.
+            </p>
+          </div>
+          <div className="flex gap-3 text-orange-600">
+            <button className="bg-orange-100 hover:bg-orange-600 hover:text-orange-50 transition py-1 px-4 rounded">
+              Buy
+            </button>
+            <button className="bg-orange-100 hover:bg-orange-600 hover:text-orange-50 transition py-1 px-4 rounded">
+              Rent
+            </button>
+            <button className="bg-orange-100 hover:bg-orange-600 hover:text-orange-50 transition py-1 px-4 rounded">
+              Sell
+            </button>
+          </div>
+          <div className="bg-orange-50 mx-4 mb-6 rounded-md capitalize">
+            <form className="grid grid-cols-2 content-center sm:flex gap-1 p-2 capitalize">
+              <input
+                type="text"
+                placeholder="Enter keyword"
+                className="input input-bordered w-36 max-w-xs rounded-sm"
+              />
+              <select className="select select-bordered h-10 w-36 max-w-xs rounded-sm capitalize">
+                <option disabled selected>
+                  property type
+                </option>
+                <option>All</option>
+                <option>Rent</option>
+                <option>Sale</option>
+              </select>
+              <select className="select select-bordered w-36 max-w-xs rounded-sm capitalize">
+                <option disabled selected>
+                  location
+                </option>
+                <option>Abuja</option>
+                <option>Lagos</option>
+                <option>Port harcourt</option>
+              </select>
+              <select className="select select-bordered w-36 max-w-xs rounded-sm capitalize">
+                <option disabled selected>
+                  Price
+                </option>
+                <option>$0 - 500</option>
+                <option>$501 - 5000</option>
+                <option>Above $5000</option>
+              </select>
+              <button className="col-span-2 text-white bg-orange-600 hover:bg-orange-700 py-1 px-4 rounded">
+                Search
+              </button>
+            </form>
+          </div>
         </div>
-        <Link
-          to={'/search'}
-          className="text-xs sm:text-sm text-blue-800 font-bold hover:underline"
-        >
-          Let&rsquo;s get started...
-        </Link>
       </div>
 
-       {/* swiper */}
-      <Swiper navigation modules={[Navigation]}>
-        {offers &&
-          offers.length > 0 &&
-          offers.map((listing) => (
-            <SwiperSlide key={listing._id}>
-              <div
-                style={{
-                  background: `url(${listing.imageUrls[0]}) center no-repeat`,
-                  backgroundSize: 'cover',
-                }}
-                className="h-[500px]"
-              ></div>
-            </SwiperSlide>
-          ))}
-      </Swiper>
-
-      {/* listing results for offer, sale and rent */}
-      <div className="max-w-6xl mx-auto p-3 flex flex-col gap-8 my-10">
-        {offers && offers.length > 0 && (
-          <div className="px-8">
-            <div className="my-3">
-              <h2 className="text-2xl font-semibold text-slate-600">
-                Recent offers
-              </h2>
-              <Link
-                className="text-sm text-blue-800 hover:underline"
-                to={'/search?offer=true'}
-              >
-                Show more offers
-              </Link>
+      {listings.length > 0 && (
+        <div className="my-8">
+          <div className="flex flex-col items-center max-w-7xl mx-auto p-4 gap-2">
+            <div className="flex flex-col items-center capitalize">
+              <h3 className="font-semibold text-orange-500">Our properties</h3>
+              <h3 className="font-bold text-slate-700">
+                Our featured properties
+              </h3>
             </div>
-            <div className="flex flex-wrap gap-4">
-              {offers.map((listing) => (
+            {/* className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 items-center gap-4 md:gap-6 p-4" */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 items-center gap-4 p-4">
+              {listings.map((listing) => (
                 <ListingItem listing={listing} key={listing._id} />
               ))}
             </div>
           </div>
-        )}
-        {rents && rents.length > 0 && (
-          <div className="px-8">
-            <div className="my-3">
-              <h2 className="text-2xl font-semibold text-slate-600">
-                Recent places for rent
-              </h2>
-              <Link
-                className="text-sm text-blue-800 hover:underline"
-                to={'/search?type=rent'}
-              >
-                Show more places for rent
-              </Link>
-            </div>
-            <div className="flex flex-wrap gap-4">
-              {rents.map((listing) => (
-                <ListingItem listing={listing} key={listing._id} />
-              ))}
-            </div>
-          </div>
-        )}
-        {sales && sales.length > 0 && (
-          <div className="px-8">
-            <div className="my-3">
-              <h2 className="text-2xl font-semibold text-slate-600">
-                Recent places for sale
-              </h2>
-              <Link
-                className="text-sm text-blue-800 hover:underline"
-                to={'/search?type=sale'}
-              >
-                Show more places for sale
-              </Link>
-            </div>
-            <div className="flex flex-wrap gap-4">
-              {sales.map((listing) => (
-                <ListingItem listing={listing} key={listing._id} />
-              ))}
-            </div>
-          </div>
-        )}
-      </div> 
+          <ListingByLocation listings={listings} />
+        </div>
+      )}
     </div>
   );
 }
