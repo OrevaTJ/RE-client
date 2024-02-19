@@ -16,6 +16,7 @@ export default function ListingItem({ listing }) {
           src={listing.imageUrls[0]}
           alt={listing.name}
           className="h-72 sm:h-52 w-full object-cover hover:scale-105 transition-scale duration-300"
+          loading="lazy"
         />
         <div className="card-body p-4">
           <h2 className="card-title truncate">{listing.name}</h2>
