@@ -39,19 +39,19 @@ export default function ListingByLocation({ listings }) {
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 w-full items-center gap-4 p-4">
             {locationListings.map((listing) => (
-              <Link
-                to=""
-                key={listing._id}
-                style={{
-                  background: `url(${listing.imageUrls[0]}) center no-repeat`,
-                  backgroundSize: 'cover',
-                }}
-                className="relative h-72 sm:h-52 w-full rounded-md hover:scale-105 transition-scale duration-300"
-              >
-                <div className="flex items-center justify-center absolute bottom-0 left-0 h-7 w-full p-4 text-white bg-red-600 bg-opacity-50 rounded-b-md">
-                  <p className='font-semibold'>{listing.location}</p>
-                </div>
-              </Link>
+                <Link
+                  to=""
+                  key={listing._id}
+                  style={{
+                    background: `url(${listing.imageUrls[0]}) center no-repeat`,
+                    backgroundSize: 'cover',
+                  }}
+                  className="relative h-72 sm:h-52 w-full rounded-md hover:scale-105 transition-scale duration-300"
+                >
+                  <div className="flex items-center justify-center absolute bottom-0 left-0 h-7 w-full p-4 text-white bg-red-600 bg-opacity-50 rounded-b-md">
+                    <p className="font-semibold">{listing.location}</p>
+                  </div>
+                </Link>
             ))}
           </div>
         </div>
