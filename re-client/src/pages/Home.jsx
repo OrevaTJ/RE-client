@@ -4,15 +4,11 @@ import hero from '../../assets/hero.jpg';
 import tour from '../../assets/tour.jpg';
 import contact from '../../assets/contact.jpg';
 import ListingByLocation from '../components/home-components/Listing-location';
-
-import { VscWorkspaceTrusted } from 'react-icons/vsc';
-import { BsFillHouseHeartFill } from 'react-icons/bs';
-import { AiOutlineFieldTime } from 'react-icons/ai';
-import { RiVideoFill } from 'react-icons/ri';
-import { LuPhone } from 'react-icons/lu';
-import { FaMoneyCheck } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 
+import { RiVideoFill } from 'react-icons/ri';
+import { LuPhone } from 'react-icons/lu';
+import { Features } from '../components/home-components/Features';
 
 export default function Home() {
   const [listings, setListings] = useState([]);
@@ -121,207 +117,132 @@ export default function Home() {
         </div>
       )}
 
-      <div className="bg-slate-800">
-        <div className="flex flex-col items-center py-6 px-10">
-          <h3 className="text-orange-300 capitalize">Our features</h3>
-          <h3 className="font-bold text-white capitalize">why choose us?</h3>
-          <div className="grid grid-cols-2 md:grid-cols-4 items-center gap-4 p-4">
-            <div className="flex flex-col items-center justify-center p-2 bg-slate-200 rounded-md">
-              <div
-                className="rounded-full w-16 h-16 my-2
-            flex justify-center items-center bg-red-300 bg-opacity-50 cursor-pointer"
-              >
-                <VscWorkspaceTrusted className="text-red-600 size-10" />
+      <Features />
+
+      <div className="my-10 capitalize">
+        <div className="flex flex-col items-center justify-center">
+          <h1 className="font-semibold">our exclusive agents</h1>
+          <div className="grid sm:grid-cols-2 md:mx-4 md:gap-x-20 lg:gap-x-52 sm:gap-y-10">
+            <div className="flex items-center p-4 gap-4">
+              <div className="avatar online">
+                <div className="w-28 rounded-full">
+                  <img
+                    src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"
+                    loading="lazy"
+                  />
+                </div>
               </div>
-              <div className="flex flex-col items-center text-center p-2">
-                <h3 className="font-semibold text-sm">
-                  Lorem ipsum dolor sit amet.
-                </h3>
-                <p className="text-xs">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Repudiandae, maiores similique qui molestias error cupiditate?
-                </p>
-              </div>
-            </div>
-            <div className="flex flex-col items-center justify-center p-2 bg-slate-200 rounded-md">
-              <div
-                className="rounded-full w-16 h-16 my-2
-            flex justify-center items-center bg-red-300 bg-opacity-50 cursor-pointer"
-              >
-                <BsFillHouseHeartFill className="text-red-600 size-10" />
-              </div>
-              <div className="flex flex-col items-center text-center p-2">
-                <h3 className="font-semibold text-sm">
-                  Lorem ipsum dolor sit amet.
-                </h3>
-                <p className="text-xs">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Repudiandae, maiores similique qui molestias error cupiditate?
-                </p>
+              <div className="flex flex-col gap-2">
+                <h2 className="font-semibold">jenny white</h2>
+                <div className="border border-red-400 rounded-sm">
+                  <div className="flex items-center gap-2 p-1">
+                    <LuPhone className="text-red-400" />
+                    <p className="text-slate-500">call: 0900000000</p>
+                  </div>
+                </div>
               </div>
             </div>
-            <div className="flex flex-col items-center justify-center p-2 bg-slate-200 rounded-md">
-              <div
-                className="rounded-full w-16 h-16 my-2
-            flex justify-center items-center bg-red-300 bg-opacity-50 cursor-pointer"
-              >
-                <FaMoneyCheck className="text-red-600 size-9" />
+            <div className="flex items-center p-4 gap-4">
+              <div className="avatar online">
+                <div className="w-28 rounded-full">
+                  <img
+                    src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"
+                    loading="lazy"
+                  />
+                </div>
               </div>
-              <div className="flex flex-col items-center text-center p-2">
-                <h3 className="font-semibold text-sm">
-                  Lorem ipsum dolor sit amet.
-                </h3>
-                <p className="text-xs">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Repudiandae, maiores similique qui molestias error cupiditate?
-                </p>
+              <div className="flex flex-col gap-2">
+                <h2 className="font-semibold">jenny white</h2>
+                <div className="border border-red-400 rounded-sm">
+                  <div className="flex items-center gap-2 p-1">
+                    <LuPhone className="text-red-400" />
+                    <p className="text-slate-500">call: 0900000000</p>
+                  </div>
+                </div>
               </div>
             </div>
-            <div className="flex flex-col items-center justify-center p-2 bg-slate-200 rounded-md">
-              <div
-                className="rounded-full w-16 h-16 my-2
-                flex justify-center items-center bg-red-300 bg-opacity-50 cursor-pointer"
-              >
-                <AiOutlineFieldTime className="text-red-600 size-12" />
+            <div className="flex items-center p-4 gap-4">
+              <div className="avatar online">
+                <div className="w-28 rounded-full">
+                  <img
+                    src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"
+                    loading="lazy"
+                  />
+                </div>
               </div>
-              <div className="flex flex-col items-center text-center p-2">
-                <h3 className="font-semibold text-sm">
-                  Lorem ipsum dolor sit amet.
-                </h3>
-                <p className="text-xs">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Repudiandae, maiores similique qui molestias error cupiditate?
-                </p>
+              <div className="flex flex-col gap-2">
+                <h2 className="font-semibold">jenny white</h2>
+                <div className="border border-red-400 rounded-sm">
+                  <div className="flex items-center gap-2 p-1">
+                    <LuPhone className="text-red-400" />
+                    <p className="text-slate-500">call: 0900000000</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="flex items-center p-4 gap-4">
+              <div className="avatar online">
+                <div className="w-28 rounded-full">
+                  <img
+                    src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"
+                    loading="lazy"
+                  />
+                </div>
+              </div>
+              <div className="flex flex-col gap-2">
+                <h2 className="font-semibold">jenny white</h2>
+                <div className="border border-red-400 rounded-sm">
+                  <div className="flex items-center gap-2 p-1">
+                    <LuPhone className="text-red-400" />
+                    <p className="text-slate-500">call: 0900000000</p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
 
-        <div className="my-10 capitalize">
-          <div className="flex flex-col items-center justify-center">
-            <h1 className="font-semibold">our exclusive agents</h1>
-            <div className="grid sm:grid-cols-2 md:mx-4 md:gap-x-20 lg:gap-x-52 sm:gap-y-10">
-              <div className="flex items-center p-4 gap-4">
-                <div className="avatar online">
-                  <div className="w-28 rounded-full">
-                    <img
-                      src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"
-                      loading="lazy"
-                    />
-                  </div>
-                </div>
-                <div className="flex flex-col gap-2">
-                  <h2 className="font-semibold">jenny white</h2>
-                  <div className="border border-red-400 rounded-sm">
-                    <div className="flex items-center gap-2 p-1">
-                      <LuPhone className="text-red-400" />
-                      <p className="text-slate-500">call: 0900000000</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="flex items-center p-4 gap-4">
-                <div className="avatar online">
-                  <div className="w-28 rounded-full">
-                    <img
-                      src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"
-                      loading="lazy"
-                    />
-                  </div>
-                </div>
-                <div className="flex flex-col gap-2">
-                  <h2 className="font-semibold">jenny white</h2>
-                  <div className="border border-red-400 rounded-sm">
-                    <div className="flex items-center gap-2 p-1">
-                      <LuPhone className="text-red-400" />
-                      <p className="text-slate-500">call: 0900000000</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="flex items-center p-4 gap-4">
-                <div className="avatar online">
-                  <div className="w-28 rounded-full">
-                    <img
-                      src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"
-                      loading="lazy"
-                    />
-                  </div>
-                </div>
-                <div className="flex flex-col gap-2">
-                  <h2 className="font-semibold">jenny white</h2>
-                  <div className="border border-red-400 rounded-sm">
-                    <div className="flex items-center gap-2 p-1">
-                      <LuPhone className="text-red-400" />
-                      <p className="text-slate-500">call: 0900000000</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="flex items-center p-4 gap-4">
-                <div className="avatar online">
-                  <div className="w-28 rounded-full">
-                    <img
-                      src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"
-                      loading="lazy"
-                    />
-                  </div>
-                </div>
-                <div className="flex flex-col gap-2">
-                  <h2 className="font-semibold">jenny white</h2>
-                  <div className="border border-red-400 rounded-sm">
-                    <div className="flex items-center gap-2 p-1">
-                      <LuPhone className="text-red-400" />
-                      <p className="text-slate-500">call: 0900000000</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div
-          style={{
-            background: `url(${tour}) center no-repeat`,
-            backgroundSize: 'cover',
-          }}
-          className="flex items-center h-[350px] capitalize"
-        >
-          <div className="flex gap-2 m-8 w-64 rounded-sm bg-slate-200 bg-opacity-80">
-            <div className="p-4">
-              <h3 className="text-red-500 text-xs font-semibold">
-                lets take a tour
-              </h3>
-              <h1 className="font-semibold my-2">
-                search property smarter, quicker & anywhere
-              </h1>
-              <Link to="#" className="flex items-center">
-                <RiVideoFill className="text-red-600 rounded-md size-8" />
-                <h2 className="text-xs font-semibold">play video</h2>
-              </Link>
-            </div>
-          </div>
-        </div>
-
-        <div
-          style={{
-            background: `url(${contact}) center no-repeat`,
-            backgroundSize: 'cover',
-          }}
-          className="h-[350px] capitalize my"
-        >
-          <div className="flex flex-col items-center py-6 gap-2">
-            <h1 className="font-semibold">find your dream home today</h1>
-            <Link
-              to="#"
-              className="btn bg-orange-400 border-none cursor-pointer text-white"
-            >
-              contact us
+      <div
+        style={{
+          background: `url(${tour}) center no-repeat`,
+          backgroundSize: 'cover',
+        }}
+        className="flex items-center h-[350px] capitalize"
+      >
+        <div className="flex gap-2 m-8 w-64 rounded-sm bg-slate-200 bg-opacity-80">
+          <div className="p-4">
+            <h3 className="text-red-500 text-xs font-semibold">
+              lets take a tour
+            </h3>
+            <h1 className="font-semibold my-2">
+              search property smarter, quicker & anywhere
+            </h1>
+            <Link to="#" className="flex items-center">
+              <RiVideoFill className="text-red-600 rounded-md size-8" />
+              <h2 className="text-xs font-semibold">play video</h2>
             </Link>
           </div>
         </div>
+      </div>
+
+      <div
+        style={{
+          background: `url(${contact}) center no-repeat`,
+          backgroundSize: 'cover',
+        }}
+        className="h-[350px] capitalize"
+      >
+        <div className="flex flex-col items-center py-6 gap-2">
+          <h1 className="font-semibold">find your dream home today</h1>
+          <Link
+            to="#"
+            className="btn bg-orange-400 border-none cursor-pointer text-white"
+          >
+            contact us
+          </Link>
+        </div>
+      </div>
     </div>
   );
 }
