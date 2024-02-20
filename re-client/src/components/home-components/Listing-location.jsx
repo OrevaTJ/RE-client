@@ -40,7 +40,7 @@ export default function ListingByLocation({ listings }) {
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 w-full items-center gap-4 p-4">
             {locationListings.map((listing) => (
                 <Link
-                  to=""
+                  to={`/search?location=${listing.location}`}
                   key={listing._id}
                   style={{
                     background: `url(${listing.imageUrls[0]}) center no-repeat`,
