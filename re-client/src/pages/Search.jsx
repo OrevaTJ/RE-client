@@ -6,6 +6,8 @@ export default function Search() {
   const navigate = useNavigate();
   const [searchParamsData, setSearchParamsData] = useState({
     q: '',
+    location: '',
+    price: '',
     type: 'all',
     parking: false,
     furnished: false,
@@ -25,6 +27,8 @@ export default function Search() {
       const urlParams = new URLSearchParams(location.search);
       setSearchParamsData({
         q: urlParams.get('q') || '',
+        location: urlParams.get('location') || '',
+        price: urlParams.get('price') || '',
         type: urlParams.get('type') || 'all',
         parking: urlParams.get('parking') === 'true' ? true : false,
         furnished: urlParams.get('furnished') === 'true' ? true : false,
@@ -69,6 +73,14 @@ export default function Search() {
       setSearchParamsData({ ...searchParamsData, q: value });
     }
 
+    if (id === 'location') {
+      setSearchParamsData({ ...searchParamsData, location: value });
+    }
+
+    if (id === 'price') {
+      setSearchParamsData({ ...searchParamsData, price: value });
+    }
+
     if (['parking', 'furnished', 'offer'].includes(id)) {
       setSearchParamsData({
         ...searchParamsData,
@@ -89,19 +101,30 @@ export default function Search() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const { q, type, parking, furnished, offer, sort, order } =
-      searchParamsData;
+    // const { q, location, price, type, parking, furnished, offer, sort, order } =
+    //   searchParamsData;
 
-    const urlParams = new URLSearchParams({
-      q,
-      type,
-      parking,
-      furnished,
-      offer,
-      sort,
-      order,
-    });
+    // const urlParams = new URLSearchParams({
+    //   q,
+    //   location,
+    //   price,
+    //   type,
+    //   parking,
+    //   furnished,
+    //   offer,
+    //   sort,
+    //   order,
+    // });
 
+    // const searchQuery = urlParams.toString();
+
+    const filteredParams = Object.fromEntries(
+      Object.entries(searchParamsData).filter(
+        ([_, value]) => value !== undefined && value !== '' && value !== false
+      )
+    );
+
+    const urlParams = new URLSearchParams(filteredParams);
     const searchQuery = urlParams.toString();
 
     navigate(`/search?${searchQuery}`);
@@ -135,6 +158,28 @@ export default function Search() {
               placeholder="Search..."
               className="border rounded-lg p-3 w-full"
               value={searchParamsData.q}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="flex items-center gap-2">
+            <label className="whitespace-nowrap font-semibold">Location:</label>
+            <input
+              type="text"
+              id="location"
+              placeholder="State/City/Town"
+              className="border rounded-lg p-3 w-full"
+              value={searchParamsData.location}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="flex items-center gap-2">
+            <label className="whitespace-nowrap font-semibold">Price:</label>
+            <input
+              type="text"
+              id="price"
+              placeholder="State/City/Town"
+              className="border rounded-lg p-3 w-full"
+              value={searchParamsData.price}
               onChange={handleChange}
             />
           </div>
@@ -232,7 +277,7 @@ export default function Search() {
         <h1 className="text-3xl font-semibold border-b p-3 text-slate-700 mt-5">
           Listing results:
         </h1>
-        <div className="p-4 flex flex-wrap gap-2">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 items-center gap-4 p-4">
           {!loading && listings.length === 0 && (
             <p className="text-xl text-slate-700">No listing found!</p>
           )}

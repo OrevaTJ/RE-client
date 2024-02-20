@@ -91,16 +91,42 @@ export const getListings = async (req, res, next) => {
       type = { $in: ['sale', 'rent'] };
     }
 
+    // Extracting min and max price from query params
+    let minPrice;
+    let maxPrice;
+    let priceQuery = {};
+    if(req.query.price === '1000') {
+      minPrice = 0;
+      maxPrice = 1000;
+    }
+    if(req.query.price === '5000') {
+      minPrice = 1001;
+      maxPrice = 5000;
+    }
+    if(req.query.price === '5000+') {
+      minPrice = 5000;
+      maxPrice = Infinity;
+    }
+
+    if (minPrice !== undefined && maxPrice !== undefined) {
+      priceQuery = {
+        priceRegular: { $gte: minPrice, $lte: maxPrice },
+      };
+    }
+
     const searchTerm = req.query.q || '';
+    const searchLocation = req.query.location || '';
     const sort = req.query.sort || 'createdAt';
     const order = req.query.order || 'desc';
 
     const listings = await Listing.find({
       name: { $regex: searchTerm, $options: 'i' },
+      location: { $regex: searchLocation, $options: 'i' },
       offer,
       furnished,
       parking,
       type,
+      ...priceQuery
     })
       .sort({ [sort]: order })
       .limit(limit)

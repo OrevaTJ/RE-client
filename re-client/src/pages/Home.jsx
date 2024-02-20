@@ -4,7 +4,7 @@ import hero from '../../assets/hero.jpg';
 import tour from '../../assets/tour.jpg';
 import contact from '../../assets/contact.jpg';
 import ListingByLocation from '../components/home-components/Listing-location';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import { RiVideoFill } from 'react-icons/ri';
 import { LuPhone } from 'react-icons/lu';
@@ -12,6 +12,48 @@ import { Features } from '../components/home-components/Features';
 
 export default function Home() {
   const [listings, setListings] = useState([]);
+  const [searchParams, setSearchParams] = useState({
+    q: '',
+    location: '',
+    type: 'all',
+    price: '',
+  });
+  const navigate = useNavigate();
+
+  const handleChange = (e) => {
+    const { id, value } = e.target;
+
+    if (id === 'q') {
+      setSearchParams({ ...searchParams, q: value });
+    }
+
+    if (id === 'location') {
+      setSearchParams({ ...searchParams, location: value });
+    }
+
+    if (id === 'type') {
+      setSearchParams({ ...searchParams, type: value });
+    }
+
+    if (id === 'price') {
+      setSearchParams({ ...searchParams, price: value });
+    }
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    // Filter out empty, undefined parameters
+    const filteredParams = Object.fromEntries(
+      Object.entries(searchParams).filter(([_, value]) => {
+        return value !== undefined && value !== '';
+      })
+    );
+
+    // Create URLSearchParams object from filtered parameters
+    const searchQuery = new URLSearchParams(filteredParams).toString();
+    navigate(`/search?${searchQuery}`);
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -59,35 +101,53 @@ export default function Home() {
             </button>
           </div>
           <div className="bg-orange-50 mx-4 mb-6 rounded-md capitalize">
-            <form className="grid grid-cols-2 content-center sm:flex gap-1 p-2 capitalize">
+            <form
+              onSubmit={handleSubmit}
+              className="grid grid-cols-2 content-center sm:flex gap-1 p-2 capitalize"
+            >
               <input
                 type="text"
                 placeholder="Enter keyword"
+                id="q"
+                value={searchParams.q}
                 className="input input-bordered w-36 max-w-xs rounded-sm"
+                onChange={handleChange}
               />
-              <select className="select select-bordered h-10 w-36 max-w-xs rounded-sm capitalize">
+              <select
+                id="type"
+                onChange={handleChange}
+                className="select select-bordered h-10 w-36 max-w-xs rounded-sm capitalize"
+              >
                 <option disabled selected>
                   property type
                 </option>
-                <option>All</option>
-                <option>Rent</option>
-                <option>Sale</option>
+                <option value="all">All</option>
+                <option value="rent">Rent</option>
+                <option value="sale">Sale</option>
               </select>
-              <select className="select select-bordered w-36 max-w-xs rounded-sm capitalize">
+              <select
+                id="location"
+                onChange={handleChange}
+                className="select select-bordered w-36 max-w-xs rounded-sm capitalize"
+              >
                 <option disabled selected>
                   location
                 </option>
-                <option>Abuja</option>
-                <option>Lagos</option>
-                <option>Port harcourt</option>
+                <option value="Abuja">Abuja</option>
+                <option value="Lagos">Lagos</option>
+                <option value="Port Harcourt">Port harcourt</option>
               </select>
-              <select className="select select-bordered w-36 max-w-xs rounded-sm capitalize">
+              <select
+                id="price"
+                onChange={handleChange}
+                className="select select-bordered w-36 max-w-xs rounded-sm capitalize"
+              >
                 <option disabled selected>
                   Price
                 </option>
-                <option>$0 - 500</option>
-                <option>$501 - 5000</option>
-                <option>Above $5000</option>
+                <option value="1000">$0 - 1000</option>
+                <option value="5000">$1001 - 5000</option>
+                <option value="5000+">Above $5000</option>
               </select>
               <button className="col-span-2 text-white bg-orange-600 hover:bg-orange-700 py-1 px-4 rounded">
                 Search
