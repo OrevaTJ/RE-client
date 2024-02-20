@@ -6,25 +6,6 @@ import profilePicPlaceholder from '../../assets/profile-pic-placeholder.png';
 export default function Header() {
   const { currentUser } = useSelector((state) => state.user);
 
-  // const [searchTerm, setSearchTerm] = useState('');
-  // const navigate = useNavigate();
-
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-
-  //   const urlParams = new URLSearchParams(window.location.search);
-  //   urlParams.set('q', searchTerm);
-  //   const searchQuery = urlParams.toString();
-  //   navigate(`/search?${searchQuery}`);
-  // };
-
-  // // Sync the search input to the browser url
-  // useEffect(() => {
-  //   const urlParams = new URLSearchParams(location.search);
-  //   const urlSearchTerm = urlParams.get('q');
-  //   setSearchTerm(urlSearchTerm || '');
-  // }, [location.search]);
-
   return (
     <header className="bg-slate-200 shadow-md">
       <div className="flex justify-between p-2 sm:p-4 items-center max-w-6xl mx-auto">
