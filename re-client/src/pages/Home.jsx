@@ -90,15 +90,15 @@ export default function Home() {
             </p>
           </div>
           <div className="flex gap-3 text-orange-600">
-            <button className="bg-orange-100 hover:bg-orange-600 hover:text-orange-50 transition py-1 px-4 rounded">
+            <Link to='/search?type=sale' className="bg-orange-100 hover:bg-orange-600 hover:text-orange-50 transition py-1 px-4 rounded">
               Buy
-            </button>
-            <button className="bg-orange-100 hover:bg-orange-600 hover:text-orange-50 transition py-1 px-4 rounded">
+            </Link>
+            <Link to='/search?type=rent' className="bg-orange-100 hover:bg-orange-600 hover:text-orange-50 transition py-1 px-4 rounded">
               Rent
-            </button>
-            <button className="bg-orange-100 hover:bg-orange-600 hover:text-orange-50 transition py-1 px-4 rounded">
+            </Link>
+            <Link to='#' className="bg-orange-100 hover:bg-orange-600 hover:text-orange-50 transition py-1 px-4 rounded">
               Sell
-            </button>
+            </Link>
           </div>
           <div className="bg-orange-50 mx-4 mb-6 rounded-md capitalize">
             <form
@@ -158,7 +158,7 @@ export default function Home() {
       </div>
 
       {listings.length > 0 && (
-        <div className="my-8 px-10">
+        <div className="sm:my-8 sm:px-10">
           <div className="flex flex-col items-center max-w-7xl mx-auto p-4 gap-2">
             <div className="flex flex-col items-center capitalize">
               <h3 className="font-semibold text-orange-500">Our properties</h3>
@@ -166,8 +166,7 @@ export default function Home() {
                 Our featured properties
               </h3>
             </div>
-            {/* className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 items-center gap-4 md:gap-6 p-4" */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 items-center gap-4 p-4">
+            <div className="grid grid-cols-2 md:grid-cols-3 items-center gap-1 sm:gap-4 sm:p-2">
               {listings.map((listing) => (
                 <ListingItem listing={listing} key={listing._id} />
               ))}
