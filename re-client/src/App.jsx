@@ -18,7 +18,13 @@ const Footer = lazy(() => import('./components/Footer'));
 const App = () => {
   return (
     <BrowserRouter>
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense
+        fallback={
+          <div className="w-full text-center">
+            <span className="loading loading-ring loading-lg"></span>
+          </div>
+        }
+      >
         <Header />
         <Routes>
           <Route path="/" element={<Home />} />
