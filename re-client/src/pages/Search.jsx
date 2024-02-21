@@ -101,23 +101,6 @@ export default function Search() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // const { q, location, price, type, parking, furnished, offer, sort, order } =
-    //   searchParamsData;
-
-    // const urlParams = new URLSearchParams({
-    //   q,
-    //   location,
-    //   price,
-    //   type,
-    //   parking,
-    //   furnished,
-    //   offer,
-    //   sort,
-    //   order,
-    // });
-
-    // const searchQuery = urlParams.toString();
-
     const filteredParams = Object.fromEntries(
       Object.entries(searchParamsData).filter(
         ([_, value]) => value !== undefined && value !== '' && value !== false
