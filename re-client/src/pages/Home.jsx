@@ -61,7 +61,7 @@ export default function Home() {
         const res = await fetch(`/api/listing/?type=all`);
         const data = await res.json();
 
-        setListings(data);
+        setListings(data.slice(0, 6));
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -171,6 +171,9 @@ export default function Home() {
                 <ListingItem listing={listing} key={listing._id} />
               ))}
             </div>
+            <Link to='/search?type=all' className="bg-orange-400 text-orange-50 transition px-2 rounded">
+              see more
+            </Link>
           </div>
           <ListingByLocation listings={listings} />
         </div>
