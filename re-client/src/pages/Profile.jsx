@@ -44,6 +44,7 @@ export default function Profile() {
     if (isUploading) return;
 
     setIsUploading(true);
+    setUploadError(null)
 
     const storage = getStorage(app);
     const fileName = new Date().getTime() + file.name;
