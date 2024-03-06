@@ -1,6 +1,7 @@
 import { Suspense, lazy } from 'react';
 
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import ScrollToTop from './components/ScrollToTop';
 
 const Home = lazy(() => import('./pages/Home'));
 const About = lazy(() => import('./pages/About'));
@@ -18,6 +19,7 @@ const Footer = lazy(() => import('./components/Footer'));
 const App = () => {
   return (
     <BrowserRouter>
+    <ScrollToTop />
       <Suspense
         fallback={
           <div className="w-full text-center">
