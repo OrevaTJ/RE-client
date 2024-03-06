@@ -80,6 +80,8 @@ export default function Profile() {
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
+    setUpdateSuccess(false)
+    if (isUploading) return;
 
     try {
       dispatch(updateUserStart());
