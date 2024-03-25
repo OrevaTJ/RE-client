@@ -75,7 +75,9 @@ export default function Home() {
       {/* top */}
       <div
         style={{
-          background: `url(${hero}) center no-repeat`,
+          backgroundImage: `url(${hero})`,
+          backgroundRepeat: 'no-repeat',
+          backgroundPosition: 'center',
           backgroundSize: 'cover',
         }}
         className="h-[500px] flex justify-center align-middle"
@@ -90,13 +92,22 @@ export default function Home() {
             </p>
           </div>
           <div className="flex gap-3 text-orange-600">
-            <Link to='/search?type=sale' className="bg-orange-100 hover:bg-orange-600 hover:text-orange-50 transition py-1 px-4 rounded">
+            <Link
+              to="/search?type=sale"
+              className="bg-orange-100 hover:bg-orange-600 hover:text-orange-50 transition py-1 px-4 rounded"
+            >
               Buy
             </Link>
-            <Link to='/search?type=rent' className="bg-orange-100 hover:bg-orange-600 hover:text-orange-50 transition py-1 px-4 rounded">
+            <Link
+              to="/search?type=rent"
+              className="bg-orange-100 hover:bg-orange-600 hover:text-orange-50 transition py-1 px-4 rounded"
+            >
               Rent
             </Link>
-            <Link to='#' className="bg-orange-100 hover:bg-orange-600 hover:text-orange-50 transition py-1 px-4 rounded">
+            <Link
+              to="#"
+              className="bg-orange-100 hover:bg-orange-600 hover:text-orange-50 transition py-1 px-4 rounded"
+            >
               Sell
             </Link>
           </div>
@@ -171,7 +182,10 @@ export default function Home() {
                 <ListingItem listing={listing} key={listing._id} />
               ))}
             </div>
-            <Link to='/search?type=all' className="bg-orange-400 text-orange-50 transition px-2 rounded">
+            <Link
+              to="/search?type=all"
+              className="bg-orange-400 text-orange-50 transition px-2 rounded"
+            >
               see more
             </Link>
           </div>
